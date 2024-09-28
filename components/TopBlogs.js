@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const TopBlogs = () => {
     const blogs = [
@@ -50,7 +51,9 @@ const TopBlogs = () => {
                         </Card>
                     ))}
                 </div>
-                <Button className="mt-4 block mx-auto my-8">See All Blogs</Button>
+                <Link href={'/blogs'}>
+                    <Button className="mt-4 block mx-auto my-8">See All Blogs</Button>
+                </Link>
             </section>
         </div>
     );
