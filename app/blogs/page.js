@@ -73,7 +73,7 @@ const page = () => {
                 <h2 className="text-3xl font-bold mb-6 text-center">Blogs</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-2 md:px-4">
                     {allBlogs.slice(0, visibleBlogs).map((blog, index) => (
-                        <Card key={index} className="shadow-md rounded-lg overflow-hidden transition-transform duration-200 transform hover:scale-105">
+                        <Card key={index} className="shadow-md rounded-lg overflow-hidden transition-transform duration-200 cursor-pointer transform hover:scale-105">
                             <img src={blog.image} alt={blog.title} className="w-full h-40 object-cover" />
                             <CardHeader>
                                 <CardTitle className="text-lg font-semibold">{blog.title}</CardTitle>

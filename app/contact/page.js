@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import React from 'react';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from 'react-icons/fa';
 
 const page = () => {
@@ -43,7 +44,7 @@ const page = () => {
                             <label htmlFor="message" className="block text-left text-sm font-medium">
                                 Message
                             </label>
-                            <textarea
+                            <Textarea
                                 id="message"
                                 placeholder="Your Message"
                                 rows="4"

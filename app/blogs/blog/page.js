@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 
 const page = () => {
     const { id } = useParams(); // Get the blog ID from the URL
@@ -76,7 +77,7 @@ const page = () => {
                                 onChange={handleUserChange}
                                 required
                             />
-                            <textarea
+                            <Textarea
                                 className="border rounded-md p-2 w-1/2"
                                 rows="4"
                                 value={newComment}
