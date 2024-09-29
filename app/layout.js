@@ -23,7 +23,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  // const pathname = usePathname();
+
 
   // const isAuthPage = pathname === "/login" || pathname === "/signup";
 
