@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import { Button } from "@/components/ui/button"
 import {
     Sheet,
     SheetContent,
@@ -8,8 +7,9 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from "@/components/ui/sheet"
-import { ModeToggle } from './theme-button'
+} from "../ui/sheet"
+import { ModeToggle } from '../theme-button'
+import { Button } from '../ui/button'
 
 const Navbar = () => {
     return (
@@ -32,8 +32,8 @@ const Navbar = () => {
                         Contact
                     </Link>
                     <div className="flex gap-2 items-center">
-                        <Button className="mx-1" variant="outline">Login</Button>
-                        <Button className="mx-1" variant="outline">Signup</Button>
+                        <Link href={"/login"}><Button className="mx-1" variant="outline">Login</Button></Link>
+                        <Link href={"/signup"}><Button className="mx-1" variant="outline">Signup</Button></Link>
                         <ModeToggle />
                     </div>
 
@@ -67,8 +67,8 @@ const Navbar = () => {
                                             Contact
                                         </Link>
                                         <div>
-                                            <Button className="mx-1 text-xs" variant="outline">Login</Button>
-                                            <Button className="mx-1 text-xs" variant="outline">Signup</Button>
+                                        <Link href={"/login"}><Button className="mx-1 text-xs" variant="outline">Login</Button></Link>
+                                        <Link href={"/signup"}><Button className="mx-1 text-xs" variant="outline">Signup</Button></Link>    
                                         </div>
 
                                     </div>
