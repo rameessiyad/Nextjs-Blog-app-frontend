@@ -58,7 +58,7 @@ const page = () => {
 
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <Card className="text-center">
+                    <Card className="text-center cursor-pointer">
                         <CardHeader>
                             <CardTitle className="text-xl font-semibold">Users</CardTitle>
                         </CardHeader>
@@ -67,7 +67,7 @@ const page = () => {
                         </CardContent>
                     </Card>
 
-                    <Card className="text-center">
+                    <Card className="text-center cursor-pointer">
                         <CardHeader>
                             <CardTitle className="text-xl font-semibold">Blogs</CardTitle>
                         </CardHeader>
@@ -76,7 +76,7 @@ const page = () => {
                         </CardContent>
                     </Card>
 
-                    <Card className="text-center">
+                    <Card className="text-center cursor-pointer">
                         <CardHeader>
                             <CardTitle className="text-xl font-semibold">Comments</CardTitle>
                         </CardHeader>
