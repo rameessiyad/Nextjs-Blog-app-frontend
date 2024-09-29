@@ -2,7 +2,7 @@
 
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Bar } from 'react-chartjs-2'; // Using Chart.js wrapper
+import { Bar } from 'react-chartjs-2'; 
 import { useState } from 'react';
 
 // Import necessary Chart.js components
@@ -23,7 +23,7 @@ const page = () => {
         users: 100,
         blogs: 45,
         comments: 150,
-        views: [120, 80, 150, 200, 180, 300, 220], // Example weekly view count data
+        views: [120, 80, 150, 200, 180, 300, 220],
     });
 
     // Chart.js data
@@ -33,7 +33,7 @@ const page = () => {
             {
                 label: 'Views',
                 data: stats.views,
-                backgroundColor: '#3b82f6', // You can customize the color here
+                backgroundColor: '#3b82f6', 
             },
         ],
     };
@@ -56,7 +56,7 @@ const page = () => {
             <div className="p-4">
                 <h2 className="text-2xl font-semibold mb-6">Welcome to the Admin Dashboard</h2>
 
-                {/* Cards for Users, Blogs, Comments Count */}
+                
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <Card className="text-center">
                         <CardHeader>
@@ -86,7 +86,7 @@ const page = () => {
                     </Card>
                 </div>
 
-                {/* Simple Graph for Views */}
+               
                 <div className="w-full lg:w-2/3 mx-auto p-6 rounded-lg shadow-md">
                     <h3 className="text-xl font-semibold mb-4">Weekly Views</h3>
                     <Bar data={data} options={options} />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,31 +16,39 @@ const Sidebar = () => {
 
             {/* Sidebar */}
             <div className={`w-64 p-4 border-r ${isOpen ? 'block' : 'hidden'} md:block`}>
-                <ul className="space-y-4">
+                <div className="ml-5">
+                    <Link href={"/admin"} className="text-lg font-bold text-center">
+                        Blogs.
+                    </Link>
+                </div>
+                <ul className="space-y-4 mt-4">
                     <li>
-                        <Button variant="ghost" className="w-full justify-start">
-                            Dashboard
-                        </Button>
+                        <Link href={"/admin"}>
+                            <Button variant="ghost" className="w-full justify-start">
+                                Dashboard
+                            </Button>
+                        </Link>
                     </li>
                     <li>
-                        <Button variant="ghost" className="w-full justify-start">
-                            Users
-                        </Button>
+                        <Link href={"/admin/users"}>
+                            <Button variant="ghost" className="w-full justify-start">
+                                Users
+                            </Button>
+                        </Link>
                     </li>
                     <li>
-                        <Button variant="ghost" className="w-full justify-start">
-                            Products
-                        </Button>
+                        <Link href={"/admin/blogs"}>
+                            <Button variant="ghost" className="w-full justify-start">
+                                Blogs
+                            </Button>
+                        </Link>
                     </li>
                     <li>
-                        <Button variant="ghost" className="w-full justify-start">
-                            Orders
-                        </Button>
-                    </li>
-                    <li>
-                        <Button variant="ghost" className="w-full justify-start">
-                            Settings
-                        </Button>
+                        <Link href={"/admin/addblog"}>
+                            <Button variant="ghost" className="w-full justify-start">
+                                Add Blog
+                            </Button>
+                        </Link>
                     </li>
                 </ul>
             </div>
