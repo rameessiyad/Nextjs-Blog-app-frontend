@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "@/lib/react-query-client";
+import { ToastContainer } from "react-toastify";
 
 
 const geistSans = localFont({
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
         >
           <QueryClientProvider client={queryClient}>
             {children}
+            <ToastContainer />
           </QueryClientProvider>
         </ThemeProvider>
       </body>
