@@ -12,6 +12,8 @@ import {
 import { ModeToggle } from '../theme-button';
 import { Button } from '../ui/button';
 import useAuthStore from '@/store/auth-store';
+import { useMutation } from '@tanstack/react-query';
+import { fetcher } from '@/lib/fetcher';
 
 const Navbar = () => {
 
@@ -24,10 +26,37 @@ const Navbar = () => {
         setLoggedInUser(user);
     }, []);
 
+    const logoutMutation = useMutation({
+        mutationFn: async () => {
+            const response = await fetcher('/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                Credentials: 'include'
+            })
+
+            return response;
+        },
+        onSuccess: (response) => {
+            if (response.success) {
+                logout();
+                localStorage.removeItem('loggedInUser');
+                window.location.reload();
+            } else {
+                toast.error(response.message || 'Logout failed');
+            }
+        },
+
+        onError: (error) => {
+            console.log(error.message);
+            toast.error(response.message || 'Logout failed');
+        }
+    });
+
     //logout function
     const handleLogout = () => {
-        logout();
-        window.location.reload();
+        logoutMutation.mutate();
     }
 
     return (

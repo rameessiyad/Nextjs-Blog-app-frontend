@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { ModeToggle } from '../theme-button';
 import useAuthStore from '@/store/auth-store';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import { fetcher } from '@/lib/fetcher';
 
 const Header = () => {
     const { logout } = useAuthStore();
@@ -14,12 +16,38 @@ const Header = () => {
     useEffect(() => {
         const user = localStorage.getItem('loggedInUser');
         setLoggedInUser(user);
-    }, [])
+    }, []);
+
+    const logoutMutation = useMutation({
+        mutationFn: async () => {
+            const response = await fetcher('/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                Credentials: 'include'
+            })
+
+            return response;
+        },
+        onSuccess: (response) => {
+            if (response.success) {
+                logout();
+                router.push('/login');
+            } else {
+                toast.error(error.message || 'Logout failed');
+            }
+        },
+
+        onError: (error) => {
+            console.log(error.message);
+            toast.error(response.message || 'Logout failed');
+        }
+    })
 
     //logut function
     const handleLogout = () => {
-        logout();
-        router.push('/login');
+        logoutMutation.mutate();
     }
     return (
         <header className="w-full p-4 flex justify-between items-center border-b">
