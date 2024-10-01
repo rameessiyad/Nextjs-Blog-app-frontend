@@ -1,9 +1,21 @@
+'use client';
+import React, { useEffect, useState } from 'react';
 import TopBlogs from "@/components/TopBlogs";
 import { Button } from "@/components/ui/button";
 import AuthLayout from "@/components/user/AuthLayout";
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem('loggedInUser');
+    setLoggedInUser(user);
+  }, [])
+
+  const router = useRouter();
+
   return (
     <AuthLayout>
       <main className="flex flex-col  items-center min-h-screen overflow-hidden">
@@ -16,7 +28,11 @@ export default function Home() {
               Discover insightful articles, personal experiences, and tips from our community of writers. Join us in exploring diverse topics that matter to you!
             </p>
             <br />
-            <Button variant="outline">Login to read the blogs</Button>
+            <Button
+              variant="outline"
+              className={loggedInUser ? 'hidden' : "block"}
+              onClick={() => router.push('/login')}
+            >Login to read the blogs</Button>
           </div>
           <div className="w-full mt-4 lg:mt-0 lg:w-1/2">
             <Image
@@ -30,7 +46,7 @@ export default function Home() {
         </section>
 
         {/* Top Blogs Section */}
-        <TopBlogs />
+        {loggedInUser && <TopBlogs />}
 
         {/* Newsletter Section */}
         <section className="py-10 w-full">

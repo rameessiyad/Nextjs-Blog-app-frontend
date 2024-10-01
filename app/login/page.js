@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { fetcher } from '@/lib/fetcher';
 import { toast } from 'react-toastify';
+import useAuthStore from '@/store/auth-store';
 
 const page = () => {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const page = () => {
         password: ''
     })
 
+    const { setCredentials } = useAuthStore();
     const router = useRouter();
 
     //mutation for login
@@ -33,6 +35,8 @@ const page = () => {
             if (!response.success) {
                 toast.error(response.message);
             } else {
+                console.log(response.user)
+                setCredentials(response.user);
                 if (response.data === "admin") {
                     router.push('/admin')
                 } else {

@@ -1,5 +1,6 @@
-import React from 'react'
-import Link from 'next/link'
+'use client';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import {
     Sheet,
     SheetContent,
@@ -7,17 +8,36 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from "../ui/sheet"
-import { ModeToggle } from '../theme-button'
-import { Button } from '../ui/button'
+} from "../ui/sheet";
+import { ModeToggle } from '../theme-button';
+import { Button } from '../ui/button';
+import useAuthStore from '@/store/auth-store';
 
 const Navbar = () => {
+
+    const { logout } = useAuthStore();
+
+    const [loggedInUser, setLoggedInUser] = useState(null);
+
+    useEffect(() => {
+        const user = localStorage.getItem('loggedInUser');
+        setLoggedInUser(user);
+    }, []);
+
+    //logout function
+    const handleLogout = () => {
+        logout();
+        window.location.reload();
+    }
+
     return (
         <nav className="p-4 bg-background/50 sticky top-0 backdrop-blur border-b z-10">
             <div className="container mx-auto flex justify-between items-center">
-                <Link href={"/"}><div className="text-lg font-bold">
-                    Blogs.
-                </div></Link>
+                <Link href={"/"}>
+                    <div className="text-lg font-bold">
+                        Blogs.
+                    </div>
+                </Link>
                 <div className="hidden md:flex gap-8 items-center">
                     <Link href="/" className="hover:scale-105 hover:transition-transform hover:-translate-y-1 duration-300">
                         Home
@@ -25,18 +45,26 @@ const Navbar = () => {
                     <Link href="/about" className="hover:scale-105 hover:transition-transform hover:-translate-y-1 duration-300">
                         About
                     </Link>
-                    <Link href="/blogs" className="hover:scale-105 hover:transition-transform hover:-translate-y-1 duration-300">
+                    <Link href="/blogs" className={!loggedInUser ? 'hidden' : 'hover:scale-105 hover:transition-transform hover:-translate-y-1 duration-300'}>
                         Blogs
                     </Link>
                     <Link href="/contact" className="hover:scale-105 hover:transition-transform hover:-translate-y-1 duration-300">
                         Contact
                     </Link>
                     <div className="flex gap-2 items-center">
-                        <Link href={"/login"}><Button className="mx-1" variant="outline">Login</Button></Link>
-                        <Link href={"/signup"}><Button className="mx-1" variant="outline">Signup</Button></Link>
+                        <Link href={"/login"}>
+                            <Button className={!loggedInUser ? "mx-1" : "hidden"} variant="outline">Login</Button>
+                        </Link>
+                        <Link href={"/signup"}>
+                            <Button className={!loggedInUser ? "mx-1" : "hidden"} variant="outline">Signup</Button>
+                        </Link>
+                        <Button
+                            variant="outline"
+                            className={loggedInUser ? "mx-1" : "hidden"}
+                            onClick={handleLogout}
+                        >Logout</Button>
                         <ModeToggle />
                     </div>
-
                 </div>
 
                 <div className="md:hidden">
@@ -60,30 +88,33 @@ const Navbar = () => {
                                         <Link href="/about">
                                             About
                                         </Link>
-                                        <Link href="/blogs">
+                                        <Link href="/blogs" className={!loggedInUser ? 'hidden' : ''}>
                                             Blogs
                                         </Link>
                                         <Link href="/contact">
                                             Contact
                                         </Link>
                                         <div>
-                                        <Link href={"/login"}><Button className="mx-1 text-xs" variant="outline">Login</Button></Link>
-                                        <Link href={"/signup"}><Button className="mx-1 text-xs" variant="outline">Signup</Button></Link>    
+                                            <Link href={"/login"}>
+                                                <Button className={!loggedInUser ? "mx-1 text-xs" : "hidden"} variant="outline">Login</Button>
+                                            </Link>
+                                            <Link href={"/signup"}>
+                                                <Button className={!loggedInUser ? "mx-1 text-xs" : "hidden"} variant="outline">Signup</Button>
+                                            </Link>
+                                            <Button
+                                                variant="outline"
+                                                className={loggedInUser ? "mx-1 text-xs" : "hidden"}
+                                                onClick={handleLogout}>Logout</Button>
                                         </div>
-
                                     </div>
                                 </SheetDescription>
                             </SheetHeader>
                         </SheetContent>
                     </Sheet>
                 </div>
-
             </div>
-
-
-
         </nav>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;
