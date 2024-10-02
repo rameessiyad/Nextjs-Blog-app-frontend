@@ -6,20 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Edit, Trash } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { fetcher } from '@/lib/fetcher';
+import { BASEURL } from '@/lib/baseUrl';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
     // Sample blog data
     const [blogs, setBlogs] = useState([]);
 
-    // Function to handle blog deletion
-    const handleDelete = (id) => {
-        setBlogs(blogs.filter((blog) => blog.id !== id));
-    };
-
-    // Placeholder function for editing a blog
-    const handleEdit = (id) => {
-        alert(`Editing blog with ID: ${id}`);
-    };
+    const router = useRouter();
 
     const fetchBlogs = async () => {
         try {
@@ -33,6 +28,28 @@ const page = () => {
     useEffect(() => {
         fetchBlogs();
     }, [])
+
+    //delete blog function
+    const handleDelete = async (id) => {
+        try {
+            const response = await fetch(`${BASEURL}/blog/delete/${id}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setBlogs(blogs.filter((blog) => blog._id !== id));
+                toast.success("Blog deleted");
+            } else {
+                toast.error(result.message || "Failed to delete blog");
+            }
+
+        } catch (error) {
+            console.log("Error deleting blog", error);
+        }
+    }
 
     return (
         <AdminLayout>
@@ -70,7 +87,7 @@ const page = () => {
                                             <Button
                                                 variant="outline"
                                                 size="sm"
-                                                onClick={() => handleEdit(blog.id)}
+                                                onClick={() => router.push(`/admin/blogs/editblog/${blog._id}`)}
                                                 className="flex items-center gap-2"
                                             >
                                                 <Edit className="w-4 h-4" />
@@ -80,7 +97,7 @@ const page = () => {
                                             <Button
                                                 variant="destructive"
                                                 size="sm"
-                                                onClick={() => handleDelete(blog.id)}
+                                                onClick={() => handleDelete(blog._id)}
                                                 className="flex items-center gap-2"
                                             >
                                                 <Trash className="w-4 h-4" />
@@ -94,7 +111,7 @@ const page = () => {
                     </Table>
                 </div>
             </div>
-        </AdminLayout>
+        </AdminLayout >
     );
 };
 

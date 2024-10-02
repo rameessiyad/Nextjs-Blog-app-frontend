@@ -8,6 +8,7 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { BASEURL } from '@/lib/baseUrl';
 
 const AddBlogPage = () => {
     const [formData, setFormData] = useState({
@@ -21,15 +22,15 @@ const AddBlogPage = () => {
 
     const mutation = useMutation({
         mutationFn: async (data) => {
-            const response = await fetch('http://localhost:5000/api/v1/blog/create', {
+            const response = await fetch(`${BASEURL}/blog/create`, {
                 method: 'POST',
                 body: data,
-                credentials: 'include', 
+                credentials: 'include',
             });
 
             const result = await response.json();
 
-            
+
             if (!response.ok) {
                 throw new Error(result.message || 'Failed to create blog');
             }
