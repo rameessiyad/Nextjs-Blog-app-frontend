@@ -22,7 +22,6 @@ const page = () => {
     const [stats, setStats] = useState({
         users: 0,
         blogs: 0,
-        comments: 0,
         views: [120, 80, 150, 200, 180, 300, 220],
     });
 
@@ -31,13 +30,11 @@ const page = () => {
             const [usersData, blogsData, commentsData] = await Promise.all([
                 fetcher('/auth/users-count'),
                 fetcher('/blog/blogs-count'),
-                fetcher('/blog/comments-count'),
             ])
 
             setStats({
                 users: usersData.data || 0,
                 blogs: blogsData.data || 0,
-                comments: commentsData.data || 0,
                 views: stats.views,
             })
         } catch (error) {
@@ -101,14 +98,6 @@ const page = () => {
                         </CardContent>
                     </Card>
 
-                    <Card className="text-center cursor-pointer">
-                        <CardHeader>
-                            <CardTitle className="text-xl font-semibold">Comments</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-3xl font-bold">{stats.comments}</p>
-                        </CardContent>
-                    </Card>
                 </div>
 
 

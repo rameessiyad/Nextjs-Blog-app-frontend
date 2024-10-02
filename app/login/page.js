@@ -34,8 +34,10 @@ const page = () => {
         onSuccess: (response) => {
             if (!response.success) {
                 toast.error(response.message);
+
+            } else if (response.data.isBlocked) {
+                toast.error('Your account has been blocked. Please contact support.');
             } else {
-                console.log(response.user)
                 setCredentials(response.user);
                 if (response.data === "admin") {
                     router.push('/admin')

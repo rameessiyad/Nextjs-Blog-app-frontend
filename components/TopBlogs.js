@@ -1,34 +1,27 @@
 // pages/top-blogs.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { fetcher } from '@/lib/fetcher';
 
 const TopBlogs = () => {
-    const blogs = [
-        {
-            title: 'Understanding Next.js',
-            excerpt: 'A deep dive into the Next.js framework and its features. Learn how to build SEO-friendly applications with ease.',
-            date: 'September 20, 2024',
-            image: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmxvZyUyMGNvbXB1dGVyfGVufDB8fDB8fHww',
-        },
-        {
-            title: 'ShadCN UI Basics',
-            excerpt: 'An introduction to using ShadCN UI in your projects. Discover the components and utilities that can speed up your development.',
-            date: 'September 18, 2024',
-            image: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmxvZyUyMGNvbXB1dGVyfGVufDB8fDB8fHww',
-        },
-        {
-            title: 'Building Responsive UIs',
-            excerpt: 'Techniques for creating responsive user interfaces with Tailwind CSS. Tips for maintaining consistency across devices.',
-            date: 'September 15, 2024',
-            image: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmxvZyUyMGNvbXB1dGVyfGVufDB8fDB8fHww',
-        },
-        // Additional blog entries can be added here
-    ];
+    const [blogs, setBlogs] = useState([]);
 
-    // Slice the array to show only the first three blogs
     const displayedBlogs = blogs.slice(0, 3);
+
+    const fetchBlogs = async () => {
+        try {
+            const data = await fetcher('/blog/topblogs')
+            setBlogs(data.data);
+        } catch (error) {
+            console.log("Error fetching blogs", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchBlogs();
+    }, [])
 
     return (
         <div className="min-h-screen flex flex-col items-center py-10 px-4">
@@ -42,8 +35,7 @@ const TopBlogs = () => {
                                 <CardTitle className="text-lg font-semibold">{blog.title}</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p className="mb-2">{blog.excerpt}</p>
-                                <span className="text-sm text-gray-500">{blog.date}</span>
+                                <span className="text-sm text-gray-500">{blog.content}</span>
                             </CardContent>
                             <CardFooter>
                                 <Button variant="outline">Read More</Button>
