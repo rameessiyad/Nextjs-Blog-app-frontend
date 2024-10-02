@@ -19,8 +19,6 @@ const page = () => {
         }
     }
 
-    console.log(users)
-
     // Function to toggle the block/unblock status of a user
     const toggleBlockStatus = async (id, currentStatus) => {
         try {
@@ -62,7 +60,7 @@ const page = () => {
 
                         <TableBody>
                             {users.map((user) => (
-                                <TableRow key={user.id} className="border-t">
+                                <TableRow key={user._id} className="border-t">
                                     <TableCell className="px-4 py-2">{user?.username}</TableCell>
                                     <TableCell className="px-4 py-2">{user?.email}</TableCell>
                                     <TableCell className="px-4 py-2 capitalize">{user.isBlocked ? 'Blocked' : 'Unblocked'}</TableCell>

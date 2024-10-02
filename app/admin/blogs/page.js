@@ -1,33 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
+import { fetcher } from '@/lib/fetcher';
 
 const page = () => {
     // Sample blog data
-    const [blogs, setBlogs] = useState([
-        {
-            id: 1,
-            image: 'https://via.placeholder.com/100',
-            title: 'Understanding Next.js',
-            views: 150,
-        },
-        {
-            id: 2,
-            image: 'https://via.placeholder.com/100',
-            title: 'React and State Management',
-            views: 250,
-        },
-        {
-            id: 3,
-            image: 'https://via.placeholder.com/100',
-            title: 'Tailwind CSS in Action',
-            views: 300,
-        },
-    ]);
+    const [blogs, setBlogs] = useState([]);
 
     // Function to handle blog deletion
     const handleDelete = (id) => {
@@ -38,6 +20,19 @@ const page = () => {
     const handleEdit = (id) => {
         alert(`Editing blog with ID: ${id}`);
     };
+
+    const fetchBlogs = async () => {
+        try {
+            const data = await fetcher('/blog/blogs')
+            setBlogs(data.data);
+        } catch (error) {
+            console.log("Error fetching blogs", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchBlogs();
+    }, [])
 
     return (
         <AdminLayout>
@@ -51,14 +46,13 @@ const page = () => {
                             <TableRow>
                                 <TableHead className="px-4 py-2">Image</TableHead>
                                 <TableHead className="px-4 py-2">Title</TableHead>
-                                <TableHead className="px-4 py-2">Views</TableHead>
                                 <TableHead className="px-4 py-2">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
 
                         <TableBody>
                             {blogs.map((blog) => (
-                                <TableRow key={blog.id} className="border-t">
+                                <TableRow key={blog._id} className="border-t">
                                     {/* Blog Image */}
                                     <TableCell className="px-4 py-2">
                                         <img
@@ -69,8 +63,6 @@ const page = () => {
                                     </TableCell>
                                     {/* Blog Title */}
                                     <TableCell className="px-4 py-2">{blog.title}</TableCell>
-                                    {/* Blog Views */}
-                                    <TableCell className="px-4 py-2">{blog.views}</TableCell>
                                     {/* Actions for Edit and Delete */}
                                     <TableCell className="px-4 py-2">
                                         <div className="flex gap-2">

@@ -18,7 +18,7 @@ const Page = () => {
 
   const router = useRouter();
 
-  // Mutation for signup
+ 
   const mutation = useMutation({
     mutationFn: async (data) => {
       const response = await fetcher('/auth/register', {
